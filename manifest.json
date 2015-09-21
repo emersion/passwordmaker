@@ -1,0 +1,28 @@
+{
+	"manifest_version": 2,
+
+	"name": "Password Maker X",
+	"version": "0.1.0",
+	"icons": {
+		"16": "img/icon-16.png",
+		"32": "img/icon-32.png",
+		"48": "img/icon-48.png",
+		"64": "img/icon-64.png",
+		"72": "img/icon-72.png",
+		"96": "img/icon-96.png",
+		"140": "img/icon-140.png",
+		"300": "img/icon-300.png"
+	},
+
+	"applications": {
+		"gecko": {
+			"id": "passwordmaker@emersion.fr"
+		}
+	},
+
+	"browser_action": {
+		"default_title": "Password Maker X",
+		"default_icon": "img/icon-32.png",
+		"default_popup": "popup.html"
+	}
+}

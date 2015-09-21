@@ -1,0 +1,23 @@
+body {
+	min-width: 250px;
+}
+
+label {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+.btn-ctn {
+	position: absolute;
+	right: 0;
+	bottom: 0.3em;
+}
+.btn-ctn button {
+	border: none;
+	background: none;
+	padding: 0;
+}
+input {
+	width: 100%;
+	box-sizing: border-box;
+}

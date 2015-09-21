@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PasswordMaker</title>
+
+	<link rel="stylesheet" href="css/fontello.css">
+	<link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+	<label><strong>Domain</strong>:<br><input type="text" id="domain"></label><br>
+	<label for="password-master">
+		<div class="btn-ctn">
+			<button id="btn-save-master" tabindex="-1" title="Save"><i class="icon-floppy"></i></button>
+		</div>
+		<strong>Master password</strong>:<br>
+		<input type="password" id="password-master">
+	</label><br>
+	<label for="password-generated">
+		<div class="btn-ctn">
+			<button id="btn-copy" tabindex="-1" title="Copy"><i class="icon-docs"></i></button><button id="btn-auto-fill" tabindex="-1" title="Autofill password (Enter)"><i class="icon-login"></i></button>
+		</div>
+		<strong>Generated password</strong>:<br>
+		<input type="password" id="password-generated">
+	</label>
+
+	<script src="js/lib/aes.js"></script>
+	<script src="js/lib/hashutils.js"></script>
+	<script src="js/lib/l33t.js"></script>
+	<script src="js/lib/md4.js"></script>
+	<script src="js/lib/md5.js"></script>
+	<script src="js/lib/md5_v6.js"></script>
+	<script src="js/lib/ripemd160.js"></script>
+	<script src="js/lib/sha1.js"></script>
+	<script src="js/lib/sha256.js"></script>
+	<script src="js/lib/passwordmaker.js"></script>
+	<script src="js/popup.js"></script>
+</body>
+</html>
