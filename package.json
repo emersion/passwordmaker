@@ -1,0 +1,34 @@
+{
+  "name": "passwordmaker-webextension",
+  "version": "0.1.0",
+  "description": "PasswordMaker WebExtension",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emersion/passwordmaker.git"
+  },
+  "keywords": [
+    "password",
+    "make",
+    "generate",
+    "hash"
+  ],
+  "author": "emersion",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emersion/passwordmaker/issues"
+  },
+  "homepage": "https://github.com/emersion/passwordmaker#readme",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-zip": "^3.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "passwordmaker": "^1.0.0"
+  }
+}

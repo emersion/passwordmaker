@@ -1,3 +1,5 @@
+var passwordmaker = require('passwordmaker');
+
 // List of panel entries
 var domainEntry = document.getElementById("domain"),
   masterPasswdEntry = document.getElementById("password-master"),
