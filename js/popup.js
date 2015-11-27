@@ -1,4 +1,4 @@
-var passwordmaker = require('passwordmaker');
+var makePassword = require('passwordmaker');
 
 // List of panel entries
 var domainEntry = document.getElementById("domain"),
@@ -29,8 +29,8 @@ var charsets = {
 // Called each time an entry is updated
 var onUpdate = function () {
   var opts = {
-    url: domainEntry.value,
-    master: masterPasswdEntry.value,
+    data: domainEntry.value,
+    masterPassword: masterPasswdEntry.value,
     username: username,
     modifier: prefs.modifier || '',
     hashAlgorithm: prefs.hashAlgorithm || 'md5',
@@ -42,7 +42,12 @@ var onUpdate = function () {
     charset: charsets[prefs.charset] || charsets['alphanumsym']
   };
 
-  var passwd = generatePassword(opts);
+  var passwd = '';
+  try {
+    passwd = makePassword(opts)
+  } catch (err) {
+    console.error(err);
+  }
 
   generatedPasswdEntry.value = passwd;
 
