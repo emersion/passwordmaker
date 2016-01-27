@@ -20,9 +20,19 @@
 		}
 	},
 
+	"permissions": [
+		"storage",
+		"activeTab"
+	],
+
 	"browser_action": {
 		"default_title": "Password Maker X",
 		"default_icon": "img/icon-32.png",
 		"default_popup": "popup.html"
+	},
+
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
 	}
 }

@@ -1,0 +1,13 @@
+form {
+	text-align: right;
+}
+form label {
+	float: left;
+}
+form .options-form-footer {
+	text-align: left;
+}
+
+#options-saved {
+	visibility: hidden;
+}

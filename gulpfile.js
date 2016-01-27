@@ -10,6 +10,7 @@ var xpiName = 'passwordmaker.xpi';
 gulp.task('browserify', function () {
 	var b = browserify();
 	return b.require('passwordmaker')
+		.require('url')
 		.bundle()
 		.pipe(source('passwordmaker.js'))
 		.pipe(buffer())

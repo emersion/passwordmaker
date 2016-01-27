@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Password Maker options</title>
+
+		<link rel="stylesheet" href="css/options.css" media="screen">
+	</head>
+	<body>
+		<form id="options-form">
+			<p>
+				<label for="option-hash-algorithm">Hash algorithm:</label>
+				<select id="option-hash-algorithm"></select>
+			</p>
+
+			<p>
+				<label for="option-length">Generated passwords length:</label>
+				<input type="number" id="option-length" min="1" required>
+			</p>
+
+			<p>
+				<label for="option-charset">Character set:</label>
+				<select id="option-charset">
+					<option value="alpha">Alphas</option>
+					<option value="alphanum">Alphanumerics</option>
+					<option value="alphanumsym">Alphanumerics &amp; symbols</option>
+					<option value="hex">Hexadecimal</option>
+					<option value="num">Numbers</option>
+					<option value="sym">Symbols</option>
+					<option value="custom">Custom...</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-custom-charset">Custom character set:</label>
+				<input type="text" id="option-custom-charset">
+			</p>
+
+			<p>
+				<label for="option-url-components">URL components:</label>
+				<select id="option-url-components">
+					<option value="domain">Domain</option>
+					<option value="domain+subdomain">Domain &amp; subdomain(s)</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-password-visibility">Password visibility:</label>
+				<select id="option-password-visibility">
+					<option value="click">Show on click</option>
+					<option value="hover">Show on hover</option>
+					<option value="always">Always</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-use-l33t">Use l33t:</label>
+				<select id="option-use-l33t">
+					<option value="off">Never</option>
+					<option value="before-hashing">Before hashing</option>
+					<option value="after-hashing">After hashing</option>
+					<option value="both">Before and after hashing</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-l33t-level">L33t level:</label>
+				<input type="number" id="option-l33t-level" min="1" max="9">
+			</p>
+
+			<p>
+				<label for="option-modifier">Modifier:</label>
+				<input type="text" id="option-modifier">
+			</p>
+
+			<p>
+				<label for="option-prefix">Password prefix:</label>
+				<input type="text" id="option-prefix">
+			</p>
+
+			<p>
+				<label for="option-suffix">Password suffix:</label>
+				<input type="text" id="option-suffix">
+			</p>
+
+			<p class="options-form-footer">
+				<button type="submit">Save</button>
+				<span id="options-saved">Options saved</span>
+			</p>
+		</form>
+
+		<script type="text/javascript" src="js/values.js"></script>
+		<script type="text/javascript" src="js/options.js"></script>
+	</body>
+</html>
