@@ -112,7 +112,7 @@ function initUi() {
     var password = inputs.generatedPassword.value;
 
     if (password.length !== 0) {
-      password = password.replace('"', '\\"');
+      password = password.replace(/"/g, '\\"');
       chrome.tabs.executeScript({
         code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
       });
