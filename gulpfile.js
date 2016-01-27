@@ -6,9 +6,6 @@ var browserify = require('browserify');
 
 var files = ['manifest.json', 'popup.html', 'css/**', 'font/**', 'img/**', 'js/**'];
 
-var xpiName = 'passwordmaker.xpi',
-	zipName = 'passwordmaker.zip';
-
 gulp.task('browserify', function () {
 	var b = browserify();
 	return b.require('passwordmaker')
@@ -21,12 +18,12 @@ gulp.task('browserify', function () {
 
 gulp.task('zip', function () {
 	gulp.src(files)
-		.pipe(zip(zipName))
+		.pipe(zip('passwordmaker.zip'))
 		.pipe(gulp.dest('.'));
 });
 
 gulp.task('xpi', function () {
 	gulp.src(files)
-		.pipe(zip(xpiName))
+		.pipe(zip('passwordmaker.xpi'))
 		.pipe(gulp.dest('.'));
 });
