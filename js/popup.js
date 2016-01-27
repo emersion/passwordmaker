@@ -52,6 +52,7 @@ function initUi() {
   	delayedUpdate();
   });
   inputs.masterPassword.addEventListener('keyup', function () {
+    buttons.saveMasterPassword.disabled = false;
   	delayedUpdate();
   });
 
@@ -99,8 +100,11 @@ function initUi() {
   });
 
   buttons.saveMasterPassword.addEventListener('click', function () {
-  	//self.port.emit("master-passwd-save", { passwd: masterPasswdEntry.value });
-  	saveMasterBtn.disabled = true;
+    chrome.storage.local.set({
+      masterPassword: inputs.masterPassword.value
+    });
+
+    buttons.saveMasterPassword.disabled = true;
   });
 
   // Auto-fill password
@@ -124,6 +128,15 @@ function initUi() {
   });
   buttons.autoFill.addEventListener('click', function () {
     autoFillPassword();
+  });
+
+  chrome.storage.local.get({
+    masterPassword: ''
+  }, function (items) {
+    if (items.masterPassword) {
+      inputs.masterPassword.value = items.masterPassword;
+      buttons.saveMasterPassword.disabled = true;
+    }
   });
 
   loadOptions(function () {
@@ -192,20 +205,5 @@ function generatePassword() {
 
 	inputs.generatedPassword.value = password;
 }
-
-/*self.port.on("show", function onShow(data) {
-	// Prefill entries if possible
-	if (data.username != 'undefined') {
-		username = data.username;
-	}
-
-	if (!masterPasswdEntry.value) {
-		masterPasswdEntry.value = data.passwd;
-
-		if (data.passwd) { // Master password already saved
-			saveMasterBtn.disabled = true;
-		}
-	}
-});*/
 
 initUi();
