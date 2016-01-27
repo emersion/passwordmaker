@@ -2,6 +2,8 @@
 	"manifest_version": 2,
 
 	"name": "Password Maker X",
+	"description": "Generate per-website passwords based on a master one.",
+	"homepage_url": "https://github.com/emersion/passwordmaker",
 	"version": "0.1.0",
 	"icons": {
 		"16": "img/icon-16.png",
