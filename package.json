@@ -4,7 +4,9 @@
   "description": "PasswordMaker WebExtension",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp browserify"
+    "build": "gulp browserify",
+    "chrome": "gulp zip",
+    "firefox": "gulp xpi"
   },
   "repository": {
     "type": "git",

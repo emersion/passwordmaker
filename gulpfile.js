@@ -5,7 +5,9 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 
 var files = ['manifest.json', 'popup.html', 'css/**', 'font/**', 'img/**', 'js/**'];
-var xpiName = 'passwordmaker.xpi';
+
+var xpiName = 'passwordmaker.xpi',
+	zipName = 'passwordmaker.zip';
 
 gulp.task('browserify', function () {
 	var b = browserify();
@@ -15,6 +17,12 @@ gulp.task('browserify', function () {
 		.pipe(source('passwordmaker.js'))
 		.pipe(buffer())
 		.pipe(gulp.dest('js'));
+});
+
+gulp.task('zip', function () {
+	gulp.src(files)
+		.pipe(zip(zipName))
+		.pipe(gulp.dest('.'));
 });
 
 gulp.task('xpi', function () {
