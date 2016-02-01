@@ -3,8 +3,8 @@ var makePassword = require('passwordmaker');
 
 var inputs = {
 	domain: document.getElementById('domain'),
-	masterPassword: document.getElementById('password-master'),
-	generatedPassword: document.getElementById('password-generated')
+	masterPassword: document.getElementById('master-password'),
+	generatedPassword: document.getElementById('generated-password')
 };
 
 var buttons = {
