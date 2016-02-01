@@ -25,7 +25,8 @@
 
 	"permissions": [
 		"storage",
-		"activeTab"
+		"activeTab",
+		"clipboardWrite"
 	],
 
 	"browser_action": {
