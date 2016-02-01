@@ -15,7 +15,7 @@ var controls = {
 function initUi() {
 	availableAlgos.forEach(function (algo) {
 		var el = document.createElement('option');
-		el.innerHTML = algo;
+		el.text = algo;
 		el.value = algo;
 		controls.hashAlgorithm.appendChild(el);
 	});
