@@ -1,5 +1,6 @@
 var parseUrl = require('url').parse;
 var makePassword = require('passwordmaker');
+var debounce = require('debounce');
 
 var inputs = {
 	domain: document.getElementById('domain'),
@@ -23,18 +24,7 @@ function loadOptions(done) {
 }
 
 function initUi() {
-  // See https://github.com/emersion/firefox-passwordmaker/issues/1
-  var updateTimeout = null;
-  var delayedUpdate = function () {
-  	if (typeof updateTimeout !== null) {
-  		clearTimeout(updateTimeout);
-  	}
-
-  	updateTimeout = setTimeout(function () {
-  		updateTimeout = null;
-  		generatePassword();
-  	}, 500);
-  };
+	var generatePasswordDebounced = debounce(generatePassword, 500);
 
   var isGeneratedPasswdRevealed = function () {
   	return (inputs.generatedPassword.type == 'text');
@@ -49,11 +39,11 @@ function initUi() {
 
   // Listen for keyup events
   inputs.domain.addEventListener('keyup', function () {
-  	delayedUpdate();
+  	generatePasswordDebounced();
   });
   inputs.masterPassword.addEventListener('keyup', function () {
     buttons.saveMasterPassword.disabled = false;
-  	delayedUpdate();
+  	generatePasswordDebounced();
   });
 
   inputs.generatedPassword.addEventListener('mouseover', function () {

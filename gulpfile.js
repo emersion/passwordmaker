@@ -4,13 +4,17 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 
-var files = ['manifest.json', 'popup.html', 'css/**', 'font/**', 'img/**', 'js/**'];
+var dependencies = ['passwordmaker', 'url', 'debounce'];
+var files = ['manifest.json', '*.html', 'css/**', 'font/**', 'img/**', 'js/**'];
 
 gulp.task('browserify', function () {
 	var b = browserify();
-	return b.require('passwordmaker')
-		.require('url')
-		.bundle()
+
+	dependencies.forEach(function (name) {
+		b.require(name);
+	});
+
+	return b.bundle()
 		.pipe(source('passwordmaker.js'))
 		.pipe(buffer())
 		.pipe(gulp.dest('js'));

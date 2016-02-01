@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Password Maker</title>
+
+    <link rel="stylesheet" href="css/fontello.css">
+    <link rel="stylesheet" href="css/popup.css">
+  	<link rel="stylesheet" href="css/standalone.css">
+  </head>
+  <body>
+    <h1>Password Maker</h1>
+
+    <form id="standalone-form">
+      <p>
+				<label for="domain"><strong>Domain</strong>:</label>
+				<input type="text" id="domain" autofocus="on">
+			</p>
+
+      <p>
+				<label for="master-password"><strong>Master password</strong>:</label>
+				<input type="password" id="master-password">
+			</p>
+
+      <p>
+        <label for="generated-password">
+      		<span class="btn-ctn">
+      			<button id="btn-copy" tabindex="-1" title="Copy"><i class="icon-docs"></i></button>
+      		</span>
+      		<strong>Generated password</strong>:<br>
+      		<input type="text" id="generated-password" autocomplete="off">
+      	</label>
+			</p>
+
+      <h2>Options</h2>
+
+      <p>
+				<label for="option-hash-algorithm">Hash algorithm:</label>
+				<select id="option-hash-algorithm"></select>
+			</p>
+
+			<p>
+				<label for="option-length">Generated passwords length:</label>
+				<input type="number" id="option-length" min="1" required>
+			</p>
+
+			<p>
+				<label for="option-charset">Character set:</label>
+				<select id="option-charset">
+					<option value="alpha">Alphas</option>
+					<option value="alphanum">Alphanumerics</option>
+					<option value="alphanumsym">Alphanumerics &amp; symbols</option>
+					<option value="hex">Hexadecimal</option>
+					<option value="num">Numbers</option>
+					<option value="sym">Symbols</option>
+					<option value="custom">Custom...</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-custom-charset">Custom character set:</label>
+				<input type="text" id="option-custom-charset">
+			</p>
+
+			<p>
+				<label for="option-use-l33t">Use l33t:</label>
+				<select id="option-use-l33t">
+					<option value="off">Never</option>
+					<option value="before-hashing">Before hashing</option>
+					<option value="after-hashing">After hashing</option>
+					<option value="both">Before and after hashing</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="option-l33t-level">L33t level:</label>
+				<input type="number" id="option-l33t-level" min="1" max="9">
+			</p>
+
+			<p>
+				<label for="option-modifier">Modifier:</label>
+				<input type="text" id="option-modifier">
+			</p>
+
+			<p>
+				<label for="option-prefix">Password prefix:</label>
+				<input type="text" id="option-prefix">
+			</p>
+
+			<p>
+				<label for="option-suffix">Password suffix:</label>
+				<input type="text" id="option-suffix">
+			</p>
+		</form>
+
+    <footer>
+      <p>
+        <small>
+          <a href="https://github.com/emersion/passwordmaker">Source code</a>
+        </small>
+      </p>
+    </footer>
+
+    <script src="js/passwordmaker.js"></script>
+    <script src="js/values.js"></script>
+    <script src="js/standalone.js"></script>
+  </body>
+</html>
