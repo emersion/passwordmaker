@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 
-	"name": "Password Maker X",
+	"name": "PasswordMaker X",
 	"description": "Generate per-website passwords based on a master one.",
 	"homepage_url": "https://github.com/emersion/passwordmaker",
 	"version": "0.1.1",
@@ -30,7 +30,7 @@
 	],
 
 	"browser_action": {
-		"default_title": "Password Maker X",
+		"default_title": "PasswordMaker X",
 		"default_icon": "img/icon-32.png",
 		"default_popup": "popup.html"
 	},
