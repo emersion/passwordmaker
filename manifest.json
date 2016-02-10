@@ -4,7 +4,7 @@
 	"name": "PasswordMaker X",
 	"description": "Generate per-website passwords based on a master one.",
 	"homepage_url": "https://github.com/emersion/passwordmaker",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"icons": {
 		"16": "img/icon-16.png",
 		"32": "img/icon-32.png",
