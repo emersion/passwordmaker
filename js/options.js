@@ -12,6 +12,8 @@ var controls = {
 	suffix: document.getElementById('option-suffix')
 };
 
+var optionsStorage = chrome.storage.sync || chrome.storage.local;
+
 function initUi() {
 	availableAlgos.forEach(function (algo) {
 		var el = document.createElement('option');
@@ -29,7 +31,7 @@ function initUi() {
 }
 
 function saveOptions() {
-	chrome.storage.sync.set({
+	optionsStorage.set({
 		hashAlgorithm: controls.hashAlgorithm.value,
 		length: parseInt(controls.length.value, 10),
 		modifier: controls.modifier.value,
@@ -47,7 +49,7 @@ function saveOptions() {
 }
 
 function loadOptions() {
-	chrome.storage.sync.get(defaultOptions, function (items) {
+	optionsStorage.get(defaultOptions, function (items) {
 		Object.keys(items).forEach(function (key) {
 			controls[key].value = items[key];
 		});

@@ -8,17 +8,23 @@
 	<link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
-	<label><strong>Domain</strong>:<br><input type="text" id="domain"></label><br>
+	<label for="domain">
+		<div class="btn-ctn">
+			<button id="btn-options" tabindex="-1" title="Options"><i class="icon-options"></i></button>
+		</div>
+		<strong>Domain</strong>:<br>
+		<input type="text" id="domain">
+	</label><br>
 	<label for="master-password">
 		<div class="btn-ctn">
-			<button id="btn-save-master" tabindex="-1" title="Save"><i class="icon-floppy"></i></button>
+			<button id="btn-save-master" tabindex="-1" title="Save"><i class="icon-save"></i></button>
 		</div>
 		<strong>Master password</strong>:<br>
 		<input type="password" id="master-password">
 	</label><br>
 	<label for="generated-password">
 		<div class="btn-ctn">
-			<button id="btn-copy" tabindex="-1" title="Copy"><i class="icon-docs"></i></button><button id="btn-auto-fill" tabindex="-1" title="Autofill password (Enter)"><i class="icon-login"></i></button>
+			<button id="btn-copy" tabindex="-1" title="Copy"><i class="icon-copy"></i></button><button id="btn-auto-fill" tabindex="-1" title="Autofill password (Enter)"><i class="icon-autocomplete"></i></button>
 		</div>
 		<strong>Generated password</strong>:<br>
 		<input type="password" id="generated-password">

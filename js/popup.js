@@ -11,13 +11,17 @@ var inputs = {
 var buttons = {
 	copy: document.getElementById('btn-copy'),
 	autoFill: document.getElementById('btn-auto-fill'),
-	saveMasterPassword: document.getElementById('btn-save-master')
+	saveMasterPassword: document.getElementById('btn-save-master'),
+	options: document.getElementById('btn-options')
 };
 
 var prefs = null;
 
+var optionsStorage = chrome.storage.sync || chrome.storage.local;
+var masterPasswordStorage = chrome.storage.local;
+
 function loadOptions(done) {
-	chrome.storage.sync.get(defaultOptions, function (items) {
+	optionsStorage.get(defaultOptions, function (items) {
 		prefs = items;
     done();
 	});
@@ -90,7 +94,7 @@ function initUi() {
   });
 
   buttons.saveMasterPassword.addEventListener('click', function () {
-    chrome.storage.local.set({
+    masterPasswordStorage.set({
       masterPassword: inputs.masterPassword.value
     });
 
@@ -120,7 +124,15 @@ function initUi() {
     autoFillPassword();
   });
 
-  chrome.storage.local.get({
+	buttons.options.addEventListener('click', function (event) {
+		if (chrome.runtime.openOptionsPage) {
+			chrome.runtime.openOptionsPage();
+		} else {
+			window.open(chrome.runtime.getURL('options.html'));
+		}
+	});
+
+  masterPasswordStorage.get({
     masterPassword: ''
   }, function (items) {
     if (items.masterPassword) {
