@@ -5,7 +5,10 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 
 var dependencies = ['passwordmaker', 'url', 'debounce'];
-var files = ['manifest.json', '*.html', 'css/**', 'font/**', 'img/**', 'js/**'];
+
+function files() {
+	return gulp.src(['manifest.json', '*.html', 'css/**', 'font/**', 'img/**', 'js/**'], { base: '.' });
+}
 
 gulp.task('browserify', function () {
 	var b = browserify();
@@ -21,13 +24,13 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('zip', function () {
-	gulp.src(files)
+	files()
 		.pipe(zip('passwordmaker.zip'))
 		.pipe(gulp.dest('.'));
 });
 
 gulp.task('xpi', function () {
-	gulp.src(files)
+	files()
 		.pipe(zip('passwordmaker.xpi'))
 		.pipe(gulp.dest('.'));
 });
