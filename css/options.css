@@ -1,3 +1,8 @@
+body {
+	max-width: 450px;
+	margin: auto;
+}
+
 form {
 	text-align: right;
 }

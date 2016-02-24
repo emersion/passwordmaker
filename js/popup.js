@@ -23,106 +23,107 @@ var masterPasswordStorage = chrome.storage.local;
 function loadOptions(done) {
 	optionsStorage.get(defaultOptions, function (items) {
 		prefs = items;
-    done();
+		done();
 	});
 }
 
 function initUi() {
 	var generatePasswordDebounced = debounce(generatePassword, 500);
 
-  var isGeneratedPasswdRevealed = function () {
-  	return (inputs.generatedPassword.type == 'text');
-  };
-  var revealGeneratedPasswd = function () {
-  	inputs.generatedPassword.type = 'text';
-  	inputs.generatedPassword.select();
-  };
-  var hideGeneratedPasswd = function () {
-  	inputs.generatedPassword.type = 'password';
-  };
+	var isGeneratedPasswdRevealed = function () {
+		return (inputs.generatedPassword.type == 'text');
+	};
+	var revealGeneratedPasswd = function () {
+		inputs.generatedPassword.type = 'text';
+		inputs.generatedPassword.select();
+	};
+	var hideGeneratedPasswd = function () {
+		inputs.generatedPassword.type = 'password';
+	};
 
-  // Listen for keyup events
-  inputs.domain.addEventListener('keyup', function () {
-  	generatePasswordDebounced();
-  });
-  inputs.masterPassword.addEventListener('keyup', function () {
-    buttons.saveMasterPassword.disabled = false;
-  	generatePasswordDebounced();
-  });
+	// Listen for keyup events
+	inputs.domain.addEventListener('keyup', function () {
+		generatePasswordDebounced();
+	});
+	inputs.masterPassword.addEventListener('keyup', function () {
+		buttons.saveMasterPassword.disabled = false;
+		generatePasswordDebounced();
+	});
 
-  inputs.generatedPassword.addEventListener('mouseover', function () {
-  	if (prefs && prefs.passwordVisibility == 'hover') {
-  		revealGeneratedPasswd();
-  	}
-  });
-  inputs.generatedPassword.addEventListener('mouseout', function () {
-  	if (prefs && prefs.passwordVisibility == 'hover') {
-  		hideGeneratedPasswd();
-  	}
-  });
-  inputs.generatedPassword.addEventListener('focus', function () {
-  	if (!inputs.generatedPassword.value.length) {
-  		generatePassword();
-  	}
-  	if (prefs && prefs.passwordVisibility == 'click') {
-  		revealGeneratedPasswd();
-  	}
-  });
-  inputs.generatedPassword.addEventListener('blur', function () {
-  	if (prefs && prefs.passwordVisibility == 'click') {
-  		hideGeneratedPasswd();
-  	}
-  });
-  inputs.generatedPassword.addEventListener('click', function () {
-  	if (prefs && prefs.passwordVisibility == 'click' && !isGeneratedPasswdRevealed()) {
-  		revealGeneratedPasswd();
-  	}
-  });
+	inputs.generatedPassword.addEventListener('mouseover', function () {
+		if (prefs && prefs.passwordVisibility == 'hover') {
+			revealGeneratedPasswd();
+		}
+	});
+	inputs.generatedPassword.addEventListener('mouseout', function () {
+		if (prefs && prefs.passwordVisibility == 'hover') {
+			hideGeneratedPasswd();
+		}
+	});
+	inputs.generatedPassword.addEventListener('focus', function () {
+		if (!inputs.generatedPassword.value.length) {
+			generatePassword();
+		}
+		if (prefs && prefs.passwordVisibility == 'click') {
+			revealGeneratedPasswd();
+		}
+	});
+	inputs.generatedPassword.addEventListener('blur', function () {
+		if (prefs && prefs.passwordVisibility == 'click') {
+			hideGeneratedPasswd();
+		}
+	});
+	inputs.generatedPassword.addEventListener('click', function () {
+		if (prefs && prefs.passwordVisibility == 'click' && !isGeneratedPasswdRevealed()) {
+			revealGeneratedPasswd();
+		}
+	});
 
-  // Listen for clicks on buttons
-  buttons.copy.addEventListener('click', function () {
-    inputs.generatedPassword.select();
+	// Listen for clicks on buttons
+	buttons.copy.addEventListener('click', function () {
+		inputs.generatedPassword.select();
 
-    var success = false;
-    try {
-      success = document.execCommand('copy');
-    } catch (err) {}
+		var success = false;
+		try {
+			success = document.execCommand('copy');
+		} catch (err) {}
 
-    if (success) {
-      window.close();
-    }
-  });
+		if (success) {
+			window.close();
+		}
+	});
 
-  buttons.saveMasterPassword.addEventListener('click', function () {
-    masterPasswordStorage.set({
-      masterPassword: inputs.masterPassword.value
-    });
+	buttons.saveMasterPassword.addEventListener('click', function () {
+		masterPasswordStorage.set({
+			masterPassword: inputs.masterPassword.value
+		});
 
-    buttons.saveMasterPassword.disabled = true;
-  });
+		buttons.saveMasterPassword.disabled = true;
+	});
 
-  // Auto-fill password
-  function autoFillPassword() {
-    var password = inputs.generatedPassword.value;
+	// Auto-fill password
+	function autoFillPassword() {
+		var password = inputs.generatedPassword.value;
 
-    if (password.length !== 0) {
-      password = password.replace(/"/g, '\\"');
-      chrome.tabs.executeScript({
-        code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
-      });
+		if (password.length !== 0) {
+			password = password.replace(/"/g, '\\"');
 
-      window.close();
-  	}
-  }
-  document.addEventListener('keypress', function (event) {
-  	if (event.keyCode == 13) { // Enter key
-  		event.preventDefault();
-  		autoFillPassword();
-  	}
-  });
-  buttons.autoFill.addEventListener('click', function () {
-    autoFillPassword();
-  });
+			chrome.tabs.executeScript({
+				code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
+			});
+
+			window.close();
+		}
+	}
+	document.addEventListener('keypress', function (event) {
+		if (event.keyCode == 13) { // Enter key
+			event.preventDefault();
+			autoFillPassword();
+		}
+	});
+	buttons.autoFill.addEventListener('click', function () {
+		autoFillPassword();
+	});
 
 	buttons.options.addEventListener('click', function (event) {
 		if (chrome.runtime.openOptionsPage) {
@@ -132,56 +133,56 @@ function initUi() {
 		}
 	});
 
-  masterPasswordStorage.get({
-    masterPassword: ''
-  }, function (items) {
-    if (items.masterPassword) {
-      inputs.masterPassword.value = items.masterPassword;
-      buttons.saveMasterPassword.disabled = true;
-    }
-  });
+	masterPasswordStorage.get({
+		masterPassword: ''
+	}, function (items) {
+		if (items.masterPassword) {
+			inputs.masterPassword.value = items.masterPassword;
+			buttons.saveMasterPassword.disabled = true;
+		}
+	});
 
-  loadOptions(function () {
-    if (prefs.passwordVisibility == 'always') {
-  		revealGeneratedPasswd();
-  	} else {
-  		hideGeneratedPasswd();
-  	}
+	loadOptions(function () {
+		if (prefs.passwordVisibility == 'always') {
+			revealGeneratedPasswd();
+		} else {
+			hideGeneratedPasswd();
+		}
 
-    chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    }, function (tabs) {
-      var tab = tabs[0];
-      if (!tab || !tab.url) return;
+		chrome.tabs.query({
+			active: true,
+			currentWindow: true
+		}, function (tabs) {
+			var tab = tabs[0];
+			if (!tab || !tab.url) return;
 
-  		var host = parseUrl(tab.url).hostname;
-      if (prefs.urlComponents == 'domain') {
-        host = host.split('.').slice(-2).join('.');
-      }
-      inputs.domain.value = host;
+			var host = parseUrl(tab.url).hostname;
+			if (prefs.urlComponents == 'domain') {
+				host = host.split('.').slice(-2).join('.');
+			}
+			inputs.domain.value = host;
 
-      if (!inputs.masterPassword.value) {
-    		if (!inputs.domain.value) {
-    			inputs.domain.focus();
-    		} else {
-    			inputs.masterPassword.focus();
-    		}
-    	} else {
-    		generatePassword();
-    		inputs.generatedPassword.focus();
-    	}
-  	});
-  });
+			if (!inputs.masterPassword.value) {
+				if (!inputs.domain.value) {
+					inputs.domain.focus();
+				} else {
+					inputs.masterPassword.focus();
+				}
+			} else {
+				generatePassword();
+				inputs.generatedPassword.focus();
+			}
+		});
+	});
 }
 
 function generatePassword() {
-  var charset = charsets[prefs.charset];
-  if (prefs.charset == 'custom') {
-    charset = prefs.customCharset;
-  }
+	var charset = charsets[prefs.charset];
+	if (prefs.charset == 'custom') {
+		charset = prefs.customCharset;
+	}
 
-  var opts = {
+	var opts = {
 		data: inputs.domain.value,
 		masterPassword: inputs.masterPassword.value,
 		modifier: prefs.modifier,
@@ -194,9 +195,9 @@ function generatePassword() {
 		charset: charset
 	};
 
-  if (!opts.masterPassword) {
-    return;
-  }
+	if (!opts.masterPassword) {
+		return;
+	}
 
 	var password = '';
 	try {
