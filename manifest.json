@@ -38,5 +38,18 @@
 	"options_ui": {
 		"page": "options.html",
 		"chrome_style": true
+	},
+
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": true
+	},
+
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"default": "Ctrl+Space"
+			}
+		}
 	}
 }

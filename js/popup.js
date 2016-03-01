@@ -11,7 +11,6 @@ var inputs = {
 var buttons = {
 	copy: document.getElementById('btn-copy'),
 	autoFill: document.getElementById('btn-auto-fill'),
-	saveMasterPassword: document.getElementById('btn-save-master'),
 	options: document.getElementById('btn-options')
 };
 
@@ -36,27 +35,87 @@ function getActiveTab(done) {
 	});
 }
 
+function loadMasterPassword(done) {
+	function gotPassword(password) {
+		inputs.masterPassword.value = password;
+		done(password.length > 0);
+	}
+
+	switch (prefs.saveMasterPassword) {
+	case 'memory':
+		chrome.runtime.sendMessage({
+			type: 'get-password'
+		}, gotPassword);
+		break;
+	case 'disk':
+		masterPasswordStorage.get({
+			masterPassword: ''
+		}, function (items) {
+			if (items.masterPassword) {
+				gotPassword(items.masterPassword);
+			}
+		});
+		break;
+	default:
+		done(false);
+	}
+}
+
+function saveMasterPassword() {
+	var masterPassword = inputs.masterPassword.value;
+
+	switch (prefs.saveMasterPassword) {
+	case 'memory':
+		chrome.runtime.sendMessage({
+			type: 'set-password',
+			password: masterPassword
+		});
+		break;
+	case 'disk':
+		masterPasswordStorage.set({
+			masterPassword: masterPassword
+		});
+		break;
+	}
+}
+
+function autoFillPassword() {
+	var password = inputs.generatedPassword.value;
+
+	if (password.length !== 0) {
+		password = password.replace(/"/g, '\\"');
+
+		chrome.tabs.executeScript({
+			code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
+		});
+
+		window.close();
+	}
+}
+
+function isGeneratedPasswdRevealed() {
+	return (inputs.generatedPassword.type == 'text');
+}
+function revealGeneratedPasswd() {
+	inputs.generatedPassword.type = 'text';
+	inputs.generatedPassword.select();
+}
+function hideGeneratedPasswd() {
+	inputs.generatedPassword.type = 'password';
+}
+
 function initUi() {
 	var generatePasswordDebounced = debounce(generatePassword, 500);
-
-	var isGeneratedPasswdRevealed = function () {
-		return (inputs.generatedPassword.type == 'text');
-	};
-	var revealGeneratedPasswd = function () {
-		inputs.generatedPassword.type = 'text';
-		inputs.generatedPassword.select();
-	};
-	var hideGeneratedPasswd = function () {
-		inputs.generatedPassword.type = 'password';
-	};
 
 	// Listen for keyup events
 	inputs.domain.addEventListener('keyup', function () {
 		generatePasswordDebounced();
 	});
 	inputs.masterPassword.addEventListener('keyup', function () {
-		buttons.saveMasterPassword.disabled = false;
 		generatePasswordDebounced();
+	});
+	inputs.masterPassword.addEventListener('change', function () {
+		saveMasterPassword();
 	});
 
 	inputs.generatedPassword.addEventListener('mouseover', function () {
@@ -102,28 +161,7 @@ function initUi() {
 		}
 	});
 
-	buttons.saveMasterPassword.addEventListener('click', function () {
-		masterPasswordStorage.set({
-			masterPassword: inputs.masterPassword.value
-		});
-
-		buttons.saveMasterPassword.disabled = true;
-	});
-
 	// Auto-fill password
-	function autoFillPassword() {
-		var password = inputs.generatedPassword.value;
-
-		if (password.length !== 0) {
-			password = password.replace(/"/g, '\\"');
-
-			chrome.tabs.executeScript({
-				code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
-			});
-
-			window.close();
-		}
-	}
 	document.addEventListener('keypress', function (event) {
 		if (event.keyCode == 13) { // Enter key
 			event.preventDefault();
@@ -139,15 +177,6 @@ function initUi() {
 			chrome.runtime.openOptionsPage();
 		} else {
 			window.open(chrome.runtime.getURL('options.html'));
-		}
-	});
-
-	masterPasswordStorage.get({
-		masterPassword: ''
-	}, function (items) {
-		if (items.masterPassword) {
-			inputs.masterPassword.value = items.masterPassword;
-			buttons.saveMasterPassword.disabled = true;
 		}
 	});
 
@@ -167,16 +196,18 @@ function initUi() {
 			}
 			inputs.domain.value = host;
 
-			if (!inputs.masterPassword.value) {
-				if (!inputs.domain.value) {
-					inputs.domain.focus();
+			loadMasterPassword(function (loaded) {
+				if (!loaded) {
+					if (!host) {
+						inputs.domain.focus();
+					} else {
+						inputs.masterPassword.focus();
+					}
 				} else {
-					inputs.masterPassword.focus();
+					generatePassword();
+					inputs.generatedPassword.focus();
 				}
-			} else {
-				generatePassword();
-				inputs.generatedPassword.focus();
-			}
+			});
 		});
 	});
 }

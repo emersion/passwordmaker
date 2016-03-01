@@ -5,6 +5,7 @@ var controls = {
 	customCharset: document.getElementById('option-custom-charset'),
 	urlComponents: document.getElementById('option-url-components'),
 	passwordVisibility: document.getElementById('option-password-visibility'),
+	saveMasterPassword: document.getElementById('option-save-master-password'),
 	useL33t: document.getElementById('option-use-l33t'),
 	l33tLevel: document.getElementById('option-l33t-level'),
 	modifier: document.getElementById('option-modifier'),
@@ -42,7 +43,8 @@ function saveOptions() {
 		l33tLevel: parseInt(controls.l33tLevel.value, 10),
 		prefix: controls.prefix.value,
 		suffix: controls.suffix.value,
-		passwordVisibility: controls.passwordVisibility.value
+		passwordVisibility: controls.passwordVisibility.value,
+		saveMasterPassword: controls.saveMasterPassword.value
 	}, function () {
 		document.getElementById('options-saved').style.visibility = 'visible';
 	});

@@ -29,5 +29,6 @@ var defaultOptions = {
 	l33tLevel: 1,
 	prefix: '',
 	suffix: '',
-	passwordVisibility: 'click'
+	passwordVisibility: 'click',
+	saveMasterPassword: 'memory'
 };
