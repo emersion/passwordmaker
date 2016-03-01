@@ -1,6 +1,8 @@
-body {
-	max-width: 450px;
-	margin: auto;
+@media (min-width: 450px) {
+	body {
+		max-width: 450px;
+		margin: auto;
+	}
 }
 
 form {
