@@ -27,6 +27,15 @@ function loadOptions(done) {
 	});
 }
 
+function getActiveTab(done) {
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+	}, function (tabs) {
+		done(tabs[0]);
+	});
+}
+
 function initUi() {
 	var generatePasswordDebounced = debounce(generatePassword, 500);
 
@@ -149,11 +158,7 @@ function initUi() {
 			hideGeneratedPasswd();
 		}
 
-		chrome.tabs.query({
-			active: true,
-			currentWindow: true
-		}, function (tabs) {
-			var tab = tabs[0];
+		getActiveTab(function (tab) {
 			if (!tab || !tab.url) return;
 
 			var host = parseUrl(tab.url).hostname;
