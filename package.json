@@ -4,6 +4,7 @@
   "description": "PasswordMaker WebExtension",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
     "build": "gulp browserify",
     "chrome": "gulp zip",
     "firefox": "gulp xpi"
@@ -33,6 +34,8 @@
   },
   "dependencies": {
     "debounce": "^1.0.0",
-    "passwordmaker": "^1.0.0"
+    "gulp-required": "^0.1.0",
+    "passwordmaker": "^1.0.0",
+    "unicornpass": "^0.1.0"
   }
 }
