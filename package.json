@@ -28,6 +28,7 @@
   "devDependencies": {
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
+    "gulp-required": "^0.1.0",
     "gulp-zip": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
@@ -35,7 +36,6 @@
   "dependencies": {
     "async-once-save": "^0.1.0",
     "debounce": "^1.0.0",
-    "gulp-required": "^0.1.0",
     "passwordmaker": "^1.0.0",
     "unicornpass": "^0.1.0"
   }
