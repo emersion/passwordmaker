@@ -6,6 +6,7 @@ var controls = {
 	urlComponents: document.getElementById('option-url-components'),
 	passwordVisibility: document.getElementById('option-password-visibility'),
 	saveMasterPassword: document.getElementById('option-save-master-password'),
+	unicornpass: document.getElementById('option-unicornpass'),
 	useL33t: document.getElementById('option-use-l33t'),
 	l33tLevel: document.getElementById('option-l33t-level'),
 	modifier: document.getElementById('option-modifier'),
@@ -44,7 +45,8 @@ function saveOptions() {
 		prefix: controls.prefix.value,
 		suffix: controls.suffix.value,
 		passwordVisibility: controls.passwordVisibility.value,
-		saveMasterPassword: controls.saveMasterPassword.value
+		saveMasterPassword: controls.saveMasterPassword.value,
+		unicornpass: controls.unicornpass.checked
 	}, function () {
 		document.getElementById('options-saved').style.visibility = 'visible';
 	});
@@ -53,7 +55,11 @@ function saveOptions() {
 function loadOptions() {
 	optionsStorage.get(defaultOptions, function (items) {
 		Object.keys(items).forEach(function (key) {
-			controls[key].value = items[key];
+			if (controls[key].type === 'checkbox') {
+				controls[key].checked = items[key];
+			} else {
+				controls[key].value = items[key];
+			}
 		});
 	});
 }

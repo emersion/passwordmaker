@@ -30,5 +30,6 @@ var defaultOptions = {
 	prefix: '',
 	suffix: '',
 	passwordVisibility: 'click',
-	saveMasterPassword: 'memory'
+	saveMasterPassword: 'memory',
+	unicornpass: true
 };

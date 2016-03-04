@@ -1,6 +1,9 @@
 var parseUrl = require('url').parse;
 var makePassword = require('passwordmaker');
 var debounce = require('debounce');
+var crypto_ = require('crypto'); // TODO: browser crypto overrides crypto var
+var unicornpass = require('unicornpass');
+var once = require('async-once-save');
 
 var inputs = {
 	domain: document.getElementById('domain'),
@@ -79,6 +82,42 @@ function saveMasterPassword() {
 	}
 }
 
+var loadClientId = once(function (done) {
+	optionsStorage.get({
+		clientId: ''
+	}, function (items) {
+		var clientId = items.clientId;
+
+		if (!clientId) {
+			clientId = crypto_.randomBytes(32).toString('hex');
+
+			return optionsStorage.set({
+				clientId: clientId
+			}, function () {
+				done(clientId);
+			});
+		}
+
+		done(clientId);
+	});
+});
+
+function generateUnicornpass() {
+	if (!prefs.unicornpass) return;
+
+	loadClientId(function (clientId) {
+		var password = inputs.masterPassword.value;
+
+		var style = {};
+		if (password) {
+			style = unicornpass(clientId + password);
+		}
+
+		inputs.masterPassword.style.backgroundColor = style.backgroundColor;
+		inputs.masterPassword.style.backgroundImage = style.backgroundImage;
+	});
+}
+
 function autoFillPassword() {
 	var password = inputs.generatedPassword.value;
 
@@ -104,6 +143,39 @@ function hideGeneratedPasswd() {
 	inputs.generatedPassword.type = 'password';
 }
 
+function generatePassword() {
+	var charset = charsets[prefs.charset];
+	if (prefs.charset == 'custom') {
+		charset = prefs.customCharset;
+	}
+
+	var opts = {
+		data: inputs.domain.value,
+		masterPassword: inputs.masterPassword.value,
+		modifier: prefs.modifier,
+		hashAlgorithm: prefs.hashAlgorithm,
+		whereToUseL33t: prefs.useL33t,
+		l33tLevel: prefs.l33tLevel,
+		length: prefs.length,
+		prefix: prefs.prefix,
+		suffix: prefs.suffix,
+		charset: charset
+	};
+
+	if (!opts.masterPassword) {
+		return;
+	}
+
+	var password = '';
+	try {
+		password = makePassword(opts)
+	} catch (err) {
+		console.error(err);
+	}
+
+	inputs.generatedPassword.value = password;
+}
+
 function initUi() {
 	var generatePasswordDebounced = debounce(generatePassword, 500);
 
@@ -113,9 +185,11 @@ function initUi() {
 	});
 	inputs.masterPassword.addEventListener('keyup', function () {
 		generatePasswordDebounced();
+		generateUnicornpass();
 	});
 	inputs.masterPassword.addEventListener('change', function () {
 		saveMasterPassword();
+		generateUnicornpass();
 	});
 
 	inputs.generatedPassword.addEventListener('mouseover', function () {
@@ -205,44 +279,12 @@ function initUi() {
 					}
 				} else {
 					generatePassword();
+					generateUnicornpass();
 					inputs.generatedPassword.focus();
 				}
 			});
 		});
 	});
-}
-
-function generatePassword() {
-	var charset = charsets[prefs.charset];
-	if (prefs.charset == 'custom') {
-		charset = prefs.customCharset;
-	}
-
-	var opts = {
-		data: inputs.domain.value,
-		masterPassword: inputs.masterPassword.value,
-		modifier: prefs.modifier,
-		hashAlgorithm: prefs.hashAlgorithm,
-		whereToUseL33t: prefs.useL33t,
-		l33tLevel: prefs.l33tLevel,
-		length: prefs.length,
-		prefix: prefs.prefix,
-		suffix: prefs.suffix,
-		charset: charset
-	};
-
-	if (!opts.masterPassword) {
-		return;
-	}
-
-	var password = '';
-	try {
-		password = makePassword(opts)
-	} catch (err) {
-		console.error(err);
-	}
-
-	inputs.generatedPassword.value = password;
 }
 
 initUi();

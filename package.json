@@ -33,6 +33,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "async-once-save": "^0.1.0",
     "debounce": "^1.0.0",
     "gulp-required": "^0.1.0",
     "passwordmaker": "^1.0.0",
