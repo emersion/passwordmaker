@@ -17,6 +17,8 @@ var buttons = {
 	options: document.getElementById('btn-options')
 };
 
+var unicornpassBar = document.getElementById('unicornpass');
+
 var prefs = null;
 
 var optionsStorage = chrome.storage.sync || chrome.storage.local;
@@ -108,13 +110,15 @@ function generateUnicornpass() {
 	loadClientId(function (clientId) {
 		var password = inputs.masterPassword.value;
 
-		var style = {};
+		var style = { visibility: 'hidden' };
 		if (password) {
 			style = unicornpass(clientId + password);
+			style.visibility = 'visible';
 		}
 
-		inputs.masterPassword.style.backgroundColor = style.backgroundColor;
-		inputs.masterPassword.style.backgroundImage = style.backgroundImage;
+		for (var key in style) {
+			unicornpassBar.style[key] = style[key];
+		}
 	});
 }
 
@@ -177,7 +181,8 @@ function generatePassword() {
 }
 
 function initUi() {
-	var generatePasswordDebounced = debounce(generatePassword, 500);
+	var generatePasswordDebounced = debounce(generatePassword, 300);
+	var generateUnicornpassDebounced = debounce(generateUnicornpass, 300);
 
 	// Listen for keyup events
 	inputs.domain.addEventListener('keyup', function () {
@@ -185,11 +190,10 @@ function initUi() {
 	});
 	inputs.masterPassword.addEventListener('keyup', function () {
 		generatePasswordDebounced();
-		generateUnicornpass();
+		generateUnicornpassDebounced();
 	});
 	inputs.masterPassword.addEventListener('change', function () {
 		saveMasterPassword();
-		generateUnicornpass();
 	});
 
 	inputs.generatedPassword.addEventListener('mouseover', function () {
@@ -259,6 +263,11 @@ function initUi() {
 			revealGeneratedPasswd();
 		} else {
 			hideGeneratedPasswd();
+		}
+
+		if (prefs.unicornpass) {
+			unicornpassBar.style.display = 'block';
+			unicornpassBar.style.visibility = 'hidden';
 		}
 
 		getActiveTab(function (tab) {
