@@ -128,9 +128,13 @@ function autoFillPassword() {
 	if (password.length !== 0) {
 		password = password.replace(/"/g, '\\"');
 
-		chrome.tabs.executeScript({
-			code: 'if (document.activeElement) { document.activeElement.value = "'+password+'"; }'
-		});
+		var code = 'var el = document.activeElement;' +
+			'if (el) {' +
+			'	el.value = "' + password + '";' +
+			'	el.dispatchEvent(new KeyboardEvent("input"))' +
+			'}';
+
+		chrome.tabs.executeScript({ code: code });
 
 		window.close();
 	}
