@@ -128,9 +128,15 @@ function autoFillPassword() {
 	if (password.length !== 0) {
 		password = password.replace(/"/g, '\\"');
 
-		var code = 'var el = document.activeElement;' +
-			'if (el) {' +
-			'	el.value = "' + password + '";' +
+		var code = 'var el = document.activeElement;';
+		if (prefs.autoFillHiddenOnly) {
+			// Check that the active input is a password input
+			code += 'if (el && el.tagName.toLowerCase() == "input" && el.type == "password") {';
+		} else {
+			code += 'if (el) {';
+		}
+
+		code += '	el.value = "' + password + '";' +
 			'	el.dispatchEvent(new KeyboardEvent("input"))' +
 			'}';
 
