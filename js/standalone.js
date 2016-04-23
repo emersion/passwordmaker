@@ -8,8 +8,8 @@ var inputs = {
 	masterPassword: document.getElementById('master-password'),
 	generatedPassword: document.getElementById('generated-password'),
 
-  // Options
-  hashAlgorithm: document.getElementById('option-hash-algorithm'),
+	// Options
+	hashAlgorithm: document.getElementById('option-hash-algorithm'),
 	length: document.getElementById('option-length'),
 	charset: document.getElementById('option-charset'),
 	customCharset: document.getElementById('option-custom-charset'),
@@ -32,63 +32,63 @@ function initUi() {
 		inputs.hashAlgorithm.appendChild(el);
 	});
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    generatePassword();
-  });
+	form.addEventListener('submit', function (event) {
+		event.preventDefault();
+		generatePassword();
+	});
 
-  form.addEventListener('change', function () {
-    generatePassword();
-  });
+	form.addEventListener('change', function () {
+		generatePassword();
+	});
 
 	var generatePasswordDebounced = debounce(generatePassword, 500);
 
-  inputs.domain.addEventListener('keyup', function () {
-  	generatePasswordDebounced();
-  });
-  inputs.masterPassword.addEventListener('keyup', function () {
-  	generatePasswordDebounced();
-  });
+	inputs.domain.addEventListener('keyup', function () {
+		generatePasswordDebounced();
+	});
+	inputs.masterPassword.addEventListener('keyup', function () {
+		generatePasswordDebounced();
+	});
 
-  buttons.copy.addEventListener('click', function () {
-    inputs.generatedPassword.select();
+	buttons.copy.addEventListener('click', function () {
+		inputs.generatedPassword.select();
 
-    var success = false;
-    try {
-      success = document.execCommand('copy');
-    } catch (err) {}
-  });
+		var success = false;
+		try {
+			success = document.execCommand('copy');
+		} catch (err) {}
+	});
 
-  loadOptions();
+	loadOptions();
 }
 
 function loadOptions() {
-  Object.keys(defaultOptions).forEach(function (key) {
-    if (!inputs[key]) return;
-    inputs[key].value = defaultOptions[key];
-  });
+	Object.keys(defaultOptions).forEach(function (key) {
+		if (!inputs[key]) return;
+		inputs[key].value = defaultOptions[key];
+	});
 }
 
 function getOptions() {
-  var options = {};
+	var options = {};
 
-  Object.keys(defaultOptions).forEach(function (key) {
-    if (!inputs[key]) return;
-    options[key] = inputs[key].value;
-  });
+	Object.keys(defaultOptions).forEach(function (key) {
+		if (!inputs[key]) return;
+		options[key] = inputs[key].value;
+	});
 
-  return options;
+	return options;
 }
 
 function generatePassword() {
-  var prefs = getOptions();
+	var prefs = getOptions();
 
-  var charset = charsets[prefs.charset];
-  if (prefs.charset == 'custom') {
-    charset = prefs.customCharset;
-  }
+	var charset = charsets[prefs.charset];
+	if (prefs.charset == 'custom') {
+		charset = prefs.customCharset;
+	}
 
-  var opts = {
+	var opts = {
 		data: inputs.domain.value,
 		masterPassword: inputs.masterPassword.value,
 		modifier: prefs.modifier,
@@ -101,9 +101,9 @@ function generatePassword() {
 		charset: charset
 	};
 
-  if (!opts.masterPassword) {
-    return;
-  }
+	if (!opts.masterPassword) {
+		return;
+	}
 
 	var password = '';
 	try {
