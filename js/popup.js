@@ -19,6 +19,8 @@ var buttons = {
 
 var unicornpassBar = document.getElementById('unicornpass');
 
+var ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+
 var prefs = null;
 
 var optionsStorage = chrome.storage.sync || chrome.storage.local;
@@ -284,7 +286,7 @@ function initUi() {
 			if (!tab || !tab.url) return;
 
 			var host = parseUrl(tab.url).hostname;
-			if (prefs.urlComponents == 'domain') {
+			if (prefs.urlComponents == 'domain' && !ipRegex.test(host)) {
 				host = host.split('.').slice(-2).join('.');
 			}
 			inputs.domain.value = host;
