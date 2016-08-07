@@ -6,8 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp",
     "build": "gulp browserify",
-    "chrome": "gulp zip",
-    "firefox": "gulp xpi"
+    "dist": "gulp zip"
   },
   "repository": {
     "type": "git",
@@ -37,6 +36,6 @@
     "async-once-save": "^0.1.0",
     "debounce": "^1.0.0",
     "passwordmaker": "^1.0.0",
-    "unicornpass": "^0.1.0"
+    "unicornpass": "^0.2.0"
   }
 }

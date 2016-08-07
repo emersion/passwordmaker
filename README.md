@@ -50,7 +50,7 @@ npm run build
 
 To generate a packaged extension:
 ```
-npm run chrome
+npm run dist
 ```
 
 Licence
