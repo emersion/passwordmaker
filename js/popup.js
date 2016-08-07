@@ -268,6 +268,7 @@ function initUi() {
 		} else {
 			window.open(chrome.runtime.getURL('options.html'));
 		}
+		window.close();
 	});
 
 	loadOptions(function () {
