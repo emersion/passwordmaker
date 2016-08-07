@@ -28,8 +28,9 @@ Usage
 -----
 
 * Chrome/Chromium: https://chrome.google.com/webstore/detail/password-maker-x/jflmpillkkjcfahcokhkedcfkbeiejmc
-* Firefox (not yet fully supported): https://addons.mozilla.org/en-US/firefox/addon/passwordmaker-x/
+* Firefox: soon
 * Opera: soon
+* Edge: unsupported (some APIs are still missing)
 * Standalone version: https://www.emersion.fr/passwordmaker/
 
 > There is also an Android app available: https://play.google.com/store/apps/details?id=io.github.eddieringle.android.apps.passwordmaker
