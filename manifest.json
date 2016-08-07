@@ -5,9 +5,12 @@
 	"description": "Generate per-website passwords based on a master one.",
 	"homepage_url": "https://github.com/emersion/passwordmaker",
 	"version": "0.2.1",
+	"author": "emersion",
 	"icons": {
 		"16": "img/icon-16.png",
+		"20": "img/icon-20.png",
 		"32": "img/icon-32.png",
+		"40": "img/icon-40.png",
 		"48": "img/icon-48.png",
 		"64": "img/icon-64.png",
 		"72": "img/icon-72.png",
@@ -32,7 +35,14 @@
 
 	"browser_action": {
 		"default_title": "PasswordMaker X",
-		"default_icon": "img/icon-32.png",
+		"default_icon": {
+			"16": "img/icon-16.png",
+			"20": "img/icon-20.png",
+			"32": "img/icon-32.png",
+			"40": "img/icon-40.png",
+			"48": "img/icon-48.png",
+			"64": "img/icon-64.png"
+		},
 		"default_popup": "popup.html"
 	},
 
