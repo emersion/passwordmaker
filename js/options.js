@@ -15,7 +15,7 @@ var controls = {
 	suffix: document.getElementById('option-suffix')
 };
 
-var optionsStorage = chrome.storage.sync || chrome.storage.local;
+var optionsStorage = browser.storage.sync || browser.storage.local;
 
 function initUi() {
 	availableAlgos.forEach(function (algo) {

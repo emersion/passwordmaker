@@ -23,8 +23,8 @@ var ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
 
 var prefs = null;
 
-var optionsStorage = chrome.storage.sync || chrome.storage.local;
-var masterPasswordStorage = chrome.storage.local;
+var optionsStorage = browser.storage.sync || browser.storage.local;
+var masterPasswordStorage = browser.storage.local;
 
 function loadOptions(done) {
 	optionsStorage.get(defaultOptions, function (items) {
@@ -34,7 +34,7 @@ function loadOptions(done) {
 }
 
 function getActiveTab(done) {
-	chrome.tabs.query({
+	browser.tabs.query({
 		active: true,
 		currentWindow: true
 	}, function (tabs) {
@@ -50,7 +50,7 @@ function loadMasterPassword(done) {
 
 	switch (prefs.saveMasterPassword) {
 	case 'memory':
-		chrome.runtime.sendMessage({
+		browser.runtime.sendMessage({
 			type: 'get-password'
 		}, gotPassword);
 		break;
@@ -73,7 +73,7 @@ function saveMasterPassword() {
 
 	switch (prefs.saveMasterPassword) {
 	case 'memory':
-		chrome.runtime.sendMessage({
+		browser.runtime.sendMessage({
 			type: 'set-password',
 			password: masterPassword
 		});
@@ -142,7 +142,7 @@ function autoFillPassword() {
 			'	el.dispatchEvent(new KeyboardEvent("input"))' +
 			'}';
 
-		chrome.tabs.executeScript({ code: code });
+		browser.tabs.executeScript({ code: code });
 
 		window.close();
 	}
@@ -263,10 +263,10 @@ function initUi() {
 	});
 
 	buttons.options.addEventListener('click', function (event) {
-		if (chrome.runtime.openOptionsPage) {
-			chrome.runtime.openOptionsPage();
+		if (browser.runtime.openOptionsPage) {
+			browser.runtime.openOptionsPage();
 		} else {
-			window.open(chrome.runtime.getURL('options.html'));
+			window.open(browser.runtime.getURL('options.html'));
 		}
 		window.close();
 	});

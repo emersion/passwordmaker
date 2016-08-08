@@ -1,6 +1,8 @@
+var browser = window.browser || window.chrome;
+
 var savedPassword = '';
 
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 	switch (msg.type) {
 	case 'set-password':
 		savedPassword = msg.password;

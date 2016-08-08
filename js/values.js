@@ -34,3 +34,5 @@ var defaultOptions = {
 	unicornpass: true,
 	autoFillHiddenOnly: true
 };
+
+var browser = window.browser || window.chrome;
