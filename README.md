@@ -28,7 +28,7 @@ Usage
 -----
 
 * Chrome/Chromium: https://chrome.google.com/webstore/detail/password-maker-x/jflmpillkkjcfahcokhkedcfkbeiejmc
-* Firefox: soon
+* Firefox: https://addons.mozilla.org/en-US/firefox/addon/passwordmaker-x/
 * Opera: soon
 * Edge: partial support (some APIs are still missing)
 * Standalone version: https://www.emersion.fr/passwordmaker/
