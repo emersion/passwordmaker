@@ -2,6 +2,8 @@
 
 PasswordMaker powered by WebExtension.
 
+> Be aware of [PasswordMaker flaws](https://tonyarcieri.com/4-fatal-flaws-in-deterministic-password-managers) before using it!
+
 ![PasswordMaker 0.11](https://cloud.githubusercontent.com/assets/506932/8762930/6fca6812-2d87-11e5-911b-6a7e354fcc45.png)
 
 Features:
