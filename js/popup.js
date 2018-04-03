@@ -199,20 +199,20 @@ function generatePassword() {
  * @return {string}
  */
 function extractMainDomain(host) {
-  /**
+	/**
 	 * @type {string[]} Define common reserved 2nd-level domains ONLY used at the 3rd and below level.
-   */
+	 */
 	var commonTwoLevels = ['com.au', 'co.uk', 'ltd.uk', 'me.uk', 'net.uk', 'org.uk', 'plc.uk', 'sch.uk'];
 	var commonTwoLevelsPattern = commonTwoLevels
 		.map(twoLevelPart => ('\\.' + twoLevelPart.replace('.', '\\.'))) 	// Regex-escape dots + add leading ones
-		.join('|');																												// Or-ify the list of regex pieces
-  commonTwoLevelsPattern = '(' + commonTwoLevelsPattern + ')$'; 			// Build a complete end-matching regex
+		.join('|');                                                     	// Or-ify the list of regex pieces
+	commonTwoLevelsPattern = '(' + commonTwoLevelsPattern + ')$';     	// Build a complete end-matching regex
 
 	if (host.match(new RegExp(commonTwoLevelsPattern))) {
-    return host.split('.').slice(-3).join('.');
+		return host.split('.').slice(-3).join('.');
 	}
 
-  return host.split('.').slice(-2).join('.')
+	return host.split('.').slice(-2).join('.')
 }
 
 function initUi() {
