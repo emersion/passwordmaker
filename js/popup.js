@@ -192,6 +192,26 @@ function generatePassword() {
 	inputs.generatedPassword.value = password;
 }
 
+/**
+ * Get the main part of the domain, factoring in very common 2-level 'TLDs' where we need 3 rather than 2 parts.
+ *
+ * @param {string} host
+ * @return {string}
+ */
+function extractMainDomain(host) {
+	/**
+	 * @type {string[]} Define common reserved 2nd-level domains ONLY used at the 3rd and below level.
+	 */
+	var commonTwoLevels = ['com.au', 'co.uk', 'ltd.uk', 'me.uk', 'net.uk', 'org.uk', 'plc.uk', 'sch.uk'];
+	for (var index in commonTwoLevels) {
+		if (host.endsWith('.' + commonTwoLevels[index])) {
+			return host.split('.').slice(-3).join('.');
+		}
+	}
+
+	return host.split('.').slice(-2).join('.')
+}
+
 function initUi() {
 	var generatePasswordDebounced = debounce(generatePassword, 300);
 	var generateUnicornpassDebounced = debounce(generateUnicornpass, 300);
@@ -288,7 +308,7 @@ function initUi() {
 
 			var host = parseUrl(tab.url).hostname;
 			if (prefs.urlComponents == 'domain' && !ipRegex.test(host)) {
-				host = host.split('.').slice(-2).join('.');
+				host = extractMainDomain(host);
 			}
 			inputs.domain.value = host;
 
