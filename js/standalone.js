@@ -1,9 +1,9 @@
-var makePassword = require('passwordmaker');
-var debounce = require('debounce');
+const makePassword = require('passwordmaker');
+const debounce = require('debounce');
 
-var form = document.getElementById('standalone-form');
+const form = document.getElementById('standalone-form');
 
-var inputs = {
+const inputs = {
 	domain: document.getElementById('domain'),
 	masterPassword: document.getElementById('master-password'),
 	generatedPassword: document.getElementById('generated-password'),
@@ -20,13 +20,13 @@ var inputs = {
 	suffix: document.getElementById('option-suffix')
 };
 
-var buttons = {
+const buttons = {
 	copy: document.getElementById('btn-copy')
 };
 
 function initUi() {
 	availableAlgos.forEach(function (algo) {
-		var el = document.createElement('option');
+		const el = document.createElement('option');
 		el.text = algo;
 		el.value = algo;
 		inputs.hashAlgorithm.appendChild(el);
@@ -41,7 +41,7 @@ function initUi() {
 		generatePassword();
 	});
 
-	var generatePasswordDebounced = debounce(generatePassword, 500);
+	const generatePasswordDebounced = debounce(generatePassword, 500);
 
 	inputs.domain.addEventListener('keyup', function () {
 		generatePasswordDebounced();
@@ -70,7 +70,7 @@ function loadOptions() {
 }
 
 function getOptions() {
-	var options = {};
+	let options = {};
 
 	Object.keys(defaultOptions).forEach(function (key) {
 		if (!inputs[key]) return;
@@ -81,14 +81,11 @@ function getOptions() {
 }
 
 function generatePassword() {
-	var prefs = getOptions();
+	const prefs = getOptions();
 
-	var charset = charsets[prefs.charset];
-	if (prefs.charset == 'custom') {
-		charset = prefs.customCharset;
-	}
+	const charset = prefs.charset == 'custom' ? prefs.customCharset : charsets[prefs.charset];
 
-	var opts = {
+	const opts = {
 		data: inputs.domain.value,
 		masterPassword: inputs.masterPassword.value,
 		modifier: prefs.modifier,
@@ -105,14 +102,11 @@ function generatePassword() {
 		return;
 	}
 
-	var password = '';
 	try {
-		password = makePassword(opts)
+		inputs.generatedPassword.value = makePassword(opts)
 	} catch (err) {
 		console.error(err);
 	}
-
-	inputs.generatedPassword.value = password;
 }
 
 initUi();
